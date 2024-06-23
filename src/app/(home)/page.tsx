@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { Column, type ColumnProps } from "@/components/tasks/column";
-import { Button } from "@/components/ui/button";
+import { Column } from "@/components/tasks/task";
+import { TaskTable } from "@/components/tasks/task-table";
+import { TaskTableContextProvider } from "@/components/tasks/task-table-context";
 
 export default function Component() {
-  const [columns, setColumns] = useState<ColumnProps[]>([
+  const columns: Column[] = [
     {
       label: "To do",
       tasks: [
@@ -54,23 +54,25 @@ export default function Component() {
           title: "Implement the new dashboard design",
           description: "Create the layout and integrate the new components.",
         },
+        {
+          id: 7,
+          title: "7rd card",
+          description: "7rd description.",
+        },
+        {
+          id: 8,
+          title: "8rd card",
+          description: "8rd description.",
+        },
       ],
     },
-  ]);
+  ];
 
   return (
     <main className="flex-1 overflow-x-auto bg-muted/40 p-6">
-      <div className="flex flex-row gap-6">
-        {columns.map((column) => (
-          <Column
-            key={column.label}
-            label={column.label}
-            tasks={column.tasks}
-          ></Column>
-        ))}
-
-        <Button variant="outline"> Add new</Button>
-      </div>
+      <TaskTableContextProvider columns={columns}>
+        <TaskTable />
+      </TaskTableContextProvider>
     </main>
   );
 }
