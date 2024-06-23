@@ -33,19 +33,19 @@ export default function Component() {
     },
   ]);
 
-  const [draggedTask, setDraggedTask] = useState(null);
-  const handleDragStart = (task) => {
+  const [draggedTask, setDraggedTask] = useState<Task | null>(null);
+  const handleDragStart = (task: Task) => {
     setDraggedTask(task);
   };
 
-  const handleDragOver = (e) => {
+  const handleDragOver = (e: any) => {
     e.preventDefault();
   };
 
   const handleDrop = (column: string) => {
     setTasks((prevTasks) =>
       prevTasks.map((task) =>
-        task.id === draggedTask.id ? { ...task, column } : task,
+        task.id === draggedTask?.id ? { ...task, column } : task,
       ),
     );
     setDraggedTask(null);

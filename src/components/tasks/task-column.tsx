@@ -29,7 +29,11 @@ export function TaskColumn({
       </div>
       <div className="space-y-4 p-4">
         {tasks.map((task) => (
-          <TaskCard onDragStart={() => onTaskDragStart(task)} task={task} />
+          <TaskCard
+            key={task.id}
+            onDragStart={() => onTaskDragStart(task)}
+            task={task}
+          />
         ))}
       </div>
     </div>
