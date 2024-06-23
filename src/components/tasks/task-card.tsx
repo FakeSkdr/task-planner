@@ -3,12 +3,11 @@ import { Task } from "./task";
 
 interface TaskCardProps {
   task: Task;
-  onDragStart: (task: any) => void;
 }
 
-export function TaskCard({ task, onDragStart }: TaskCardProps) {
+export function TaskCard({ task }: TaskCardProps) {
   return (
-    <Card key={task.id} draggable onDragStart={onDragStart}>
+    <Card key={task.id}>
       <CardContent className="p-4">
         <div className="flex items-start justify-between">
           <div>
