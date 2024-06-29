@@ -1,23 +1,32 @@
+"use client";
+
 import { TaskColumn } from "@/components/tasks/task-column";
-import { Button } from "@/components/ui/button";
-import { Column } from "./task";
+import { DragDropContext } from "react-beautiful-dnd";
+import type { TaskTable as TaskTableType } from "./task";
 
 interface TaskTableProps {
-  columns: Column[];
+  data: TaskTableType;
 }
 
-export function TaskTable({ columns }: TaskTableProps) {
+export function TaskTable({ data }: TaskTableProps) {
+  const { columns, columnOrder, tasks } = data;
+
   return (
     <div className="flex flex-row gap-6">
-      {columns.map((column) => (
-        <TaskColumn
-          key={column.label}
-          label={column.label}
-          tasks={column.tasks}
-        ></TaskColumn>
-      ))}
+      <DragDropContext onDragEnd={() => {}}>
+        {columnOrder.map((columnId) => {
+          const column = columns[columnId];
+          const columnTasks = column.taskIds.map((taskId) => tasks[taskId]);
 
-      <Button variant="outline"> Add new</Button>
+          return (
+            <TaskColumn
+              key={column.id}
+              column={column}
+              tasks={columnTasks}
+            ></TaskColumn>
+          );
+        })}
+      </DragDropContext>
     </div>
   );
 }
