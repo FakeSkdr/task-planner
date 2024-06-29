@@ -10,8 +10,8 @@ export function TaskColumn({ label, tasks }: TaskColumnProps) {
         <h2 className="text-lg font-semibold">{label}</h2>
       </div>
       <div className="space-y-4 p-4">
-        {tasks.map((task, index) => (
-          <TaskCard columnId={label} key={task.id} index={index} task={task} />
+        {tasks.map((task) => (
+          <TaskCard key={task.id} task={task} />
         ))}
       </div>
     </div>

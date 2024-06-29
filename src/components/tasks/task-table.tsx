@@ -1,12 +1,12 @@
 import { TaskColumn } from "@/components/tasks/task-column";
 import { Button } from "@/components/ui/button";
-import { useTaskTableContext } from "./task-table-context";
+import { Column } from "./task";
 
-interface TaskTableProps {}
+interface TaskTableProps {
+  columns: Column[];
+}
 
-export function TaskTable({}: TaskTableProps) {
-  const { columns } = useTaskTableContext();
-
+export function TaskTable({ columns }: TaskTableProps) {
   return (
     <div className="flex flex-row gap-6">
       {columns.map((column) => (

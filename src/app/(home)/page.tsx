@@ -2,7 +2,6 @@
 
 import { Column } from "@/components/tasks/task";
 import { TaskTable } from "@/components/tasks/task-table";
-import { TaskTableContextProvider } from "@/components/tasks/task-table-context";
 
 export default function Component() {
   const columns: Column[] = [
@@ -70,9 +69,7 @@ export default function Component() {
 
   return (
     <main className="flex-1 overflow-x-auto bg-muted/40 p-6">
-      <TaskTableContextProvider columns={columns}>
-        <TaskTable />
-      </TaskTableContextProvider>
+      <TaskTable columns={columns} />
     </main>
   );
 }
