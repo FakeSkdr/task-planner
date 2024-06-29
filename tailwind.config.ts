@@ -47,6 +47,10 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        dragging: {
+          DEFAULT: "hsl(var(--dragging))",
+          over: "hsl(var(--dragging-over))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
