@@ -1,4 +1,5 @@
-import { Draggable } from "react-beautiful-dnd";
+import { cn } from "@/lib/utils";
+import { Draggable } from "@hello-pangea/dnd";
 import { Card, CardContent } from "../ui/card";
 import { Task } from "./task";
 
@@ -10,8 +11,9 @@ interface TaskCardProps {
 export function TaskCard({ task, index }: TaskCardProps) {
   return (
     <Draggable draggableId={task.id} index={index}>
-      {(provided) => (
+      {(provided, snapshot) => (
         <Card
+          className={cn("my-2", snapshot.isDragging && "bg-dragging")}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}

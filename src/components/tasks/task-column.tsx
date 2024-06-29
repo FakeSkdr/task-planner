@@ -1,4 +1,5 @@
-import { Droppable } from "react-beautiful-dnd";
+import { cn } from "@/lib/utils";
+import { Droppable } from "@hello-pangea/dnd";
 import { Column, Task } from "./task";
 import { TaskCard } from "./task-card";
 
@@ -14,9 +15,12 @@ export function TaskColumn({ column, tasks }: TaskColumnProps) {
         <h2 className="text-lg font-semibold">{column.title}</h2>
       </div>
       <Droppable droppableId={column.id}>
-        {(provided) => (
+        {(provided, snapshot) => (
           <div
-            className="space-y-4 p-4"
+            className={cn(
+              "flex flex-col p-4",
+              snapshot.isDraggingOver && "bg-dragging-over",
+            )}
             {...provided.droppableProps}
             ref={provided.innerRef}
           >
