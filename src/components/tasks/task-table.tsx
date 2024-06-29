@@ -1,10 +1,11 @@
 "use client";
 
 import { TaskColumn } from "@/components/tasks/task-column";
-import { DragDropContext } from "@hello-pangea/dnd";
+import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 import type { DropResult, ResponderProvided } from "@hello-pangea/dnd";
 import type { Column, TaskTable as TaskTableType } from "./task";
 import { useCallback, useState } from "react";
+import { DragTypes } from "./drag-type";
 
 interface TaskTableProps {
   data: TaskTableType;
@@ -12,12 +13,13 @@ interface TaskTableProps {
 
 export function TaskTable({ data }: TaskTableProps) {
   const [columns, setColumns] = useState(data.columns);
+  const [columnOrder, setColumnOrder] = useState(data.columnOrder);
 
-  const { columnOrder, tasks } = data;
+  const { tasks } = data;
 
   const onDragEnd = useCallback(
-    (result: DropResult, provided: ResponderProvided) => {
-      const { destination, source, draggableId } = result;
+    (result: DropResult) => {
+      const { destination, source, draggableId, type } = result;
       if (!destination) {
         return;
       }
@@ -27,6 +29,16 @@ export function TaskTable({ data }: TaskTableProps) {
       ) {
         return;
       }
+
+      if (type === DragTypes.Column) {
+        const newColumnOrder = Array.from(columnOrder);
+        newColumnOrder.splice(source.index, 1);
+        newColumnOrder.splice(destination.index, 0, draggableId);
+
+        setColumnOrder(newColumnOrder);
+        return;
+      }
+
       const start = columns[source.droppableId];
       const finish = columns[destination.droppableId];
 
@@ -58,25 +70,38 @@ export function TaskTable({ data }: TaskTableProps) {
         [newFinish.id]: newFinish,
       });
     },
-    [columns],
+    [columns, columnOrder],
   );
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="flex flex-row gap-6">
-        {columnOrder.map((columnId) => {
-          const column = columns[columnId];
-          const columnTasks = column.taskIds.map((taskId) => tasks[taskId]);
+      <Droppable
+        droppableId="all-columns"
+        direction="horizontal"
+        type={DragTypes.Column}
+      >
+        {(provided) => (
+          <div
+            className="flex flex-row"
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+          >
+            {columnOrder.map((columnId, index) => {
+              const column = columns[columnId];
+              const columnTasks = column.taskIds.map((taskId) => tasks[taskId]);
 
-          return (
-            <TaskColumn
-              key={column.id}
-              column={column}
-              tasks={columnTasks}
-            ></TaskColumn>
-          );
-        })}
-      </div>
+              return (
+                <TaskColumn
+                  key={column.id}
+                  column={column}
+                  tasks={columnTasks}
+                  index={index}
+                ></TaskColumn>
+              );
+            })}
+          </div>
+        )}
+      </Droppable>
     </DragDropContext>
   );
 }
