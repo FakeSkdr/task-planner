@@ -10,8 +10,11 @@ export default function Home() {
     queryFn: () => getAllTasks(),
   });
 
+  console.log(process);
+
   return (
     <main className="flex-1 overflow-x-auto bg-muted/40 p-6">
+      {process.env.VERCEL_ENV} - {process.env.VERCEL_URL}
       {(!data || isLoading) && <>Ugly loader</>}
       {data && <TaskTable data={data} />}
     </main>
