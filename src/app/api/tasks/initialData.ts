@@ -1,4 +1,4 @@
-import { TaskTable } from "./task";
+import { TaskTable } from "../../../components/tasks/task";
 
 export const initialData: TaskTable = {
   tasks: {
