@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <main className="flex-1 overflow-x-auto bg-muted/40 p-6">
       {process.env.NEXT_PUBLIC_VERCEL_ENV} -{" "}
-      {process.env.NEXT_PUBLIC_VERCEL_ENV}
+      {process.env.NEXT_PUBLIC_VERCEL_URL}
       {(!data || isLoading) && <>Ugly loader</>}
       {data && <TaskTable data={data} />}
     </main>

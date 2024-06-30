@@ -12,7 +12,8 @@ const BASE_URL =
 
 export async function getAllTasks(): Promise<TaskTable> {
   console.log("NEXT_PUBLIC_VERCEL_ENV", process.env.NEXT_PUBLIC_VERCEL_ENV);
-  console.log("NEXT_PUBLIC_VERCEL_ENV", process.env.NEXT_PUBLIC_VERCEL_URL);
+  console.log("NEXT_PUBLIC_VERCEL_URL", process.env.NEXT_PUBLIC_VERCEL_URL);
+  console.log("BASE_URL", BASE_URL);
 
   const data = await fetch(`${BASE_URL}/api/tasks`, {
     cache: "no-store",
