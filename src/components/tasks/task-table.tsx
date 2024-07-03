@@ -6,6 +6,7 @@ import type { DropResult, ResponderProvided } from "@hello-pangea/dnd";
 import type { Column, TaskTable as TaskTableType } from "./task";
 import { useCallback, useState } from "react";
 import { DragTypes } from "./drag-type";
+import { updateColumnTasks } from "./actions/tasks.actions";
 
 interface TaskTableProps {
   data: TaskTableType;
@@ -53,6 +54,14 @@ export function TaskTable({ data }: TaskTableProps) {
           ...columns,
           [newColumn.id]: newColumn,
         });
+
+        updateColumnTasks([
+          {
+            columnId: newColumn.id,
+            taskIds: newTaskIds,
+          },
+        ]);
+
         return;
       }
 
@@ -69,6 +78,17 @@ export function TaskTable({ data }: TaskTableProps) {
         [newStart.id]: newStart,
         [newFinish.id]: newFinish,
       });
+
+      updateColumnTasks([
+        {
+          columnId: newStart.id,
+          taskIds: startTaskIds,
+        },
+        {
+          columnId: newFinish.id,
+          taskIds: finishTaskIds,
+        },
+      ]);
     },
     [columns, columnOrder],
   );
